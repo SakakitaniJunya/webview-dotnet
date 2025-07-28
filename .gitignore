@@ -1,0 +1,111 @@
+
+############################################################
+# 共通（OS／エディタ依存ファイル）
+############################################################
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+# Linux
+*~
+
+# IDE／エディタ
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+############################################################
+# ── React / Node.js ───────────────────────────────────────
+############################################################
+# 依存ライブラリ
+node_modules/
+.pnp/
+.pnp.js
+
+# ビルド成果物
+build/
+dist/
+.next/          # Next.js
+out/            # next export
+.vite/          # Vite
+.storybook-static/
+
+# テスト & レポート
+coverage/
+.nyc_output/
+jest-html-reporters-*
+
+# 環境変数
+.env
+.env.*.local
+
+# ログ
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+############################################################
+# ── C# / .NET ─────────────────────────────────────────────
+############################################################
+# ビルド成果物
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+# VS による発行
+publish/
+
+# Visual Studio／VS for Mac
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+# Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# NuGet
+*.nupkg
+packages/
+# Paket
+.paket/
+paket-files/
+
+# 一時ファイル
+# (ローカル DB、トレース、Analyzers など)
+*.dbmdl
+*.jfm
+*.bak
+*.cache
+*.snupkg
+TestResults/
+*.vsp
+*.vspx
+*.sln.ide
+*.vsix
+
+############################################################
+# ── コンテナ & クラウド関連（必要に応じて） ───────────────
+############################################################
+# Docker
+**/docker-compose.override.yml
+.docker/
+docker-compose*.yaml
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+############################################################
+# ── ユーザー拡張：ここにプロジェクト固有の除外を追加 ───
+############################################################
+# 例:
+# secret-config.json
+# *.local.settings.json
