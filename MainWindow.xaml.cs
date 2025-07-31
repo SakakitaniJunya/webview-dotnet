@@ -7,7 +7,7 @@ namespace WebView2Desktop
 {
     public partial class MainWindow : Window
     {
-        private const string ReactAppUrl = "http://localhost:3000";
+        private const string ReactAppUrl = "http://localhost:3001";
         
         public MainWindow()
         {

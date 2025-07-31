@@ -1,8 +1,26 @@
+import { UserServiceClient } from '../proto/UserServiceClientPb';
+import {
+  GetUsersRequest,
+  GetUsersResponse,
+  GetUserRequest,
+  GetUserResponse,
+  CreateUserRequest,
+  CreateUserResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+  DeleteUserRequest,
+  DeleteUserResponse,
+  User
+} from '../proto/user_pb';
+
 // gRPCサーバーのURL
 const GRPC_SERVER_URL = 'http://localhost:5181';
 
-// ユーザーの型定義
-export interface User {
+// gRPC-Webクライアントのインスタンス
+const client = new UserServiceClient(GRPC_SERVER_URL);
+
+// TypeScript用の型定義（UIで使用）
+export interface UserData {
   id: number;
   name: string;
   email: string;
@@ -10,150 +28,185 @@ export interface User {
   isActive: boolean;
 }
 
-// リクエスト・レスポンスの型定義
-export interface GetUsersRequest {}
-
-export interface GetUsersResponse {
-  users: User[];
+export interface GetUsersResponseData {
+  users: UserData[];
   success: boolean;
   message: string;
 }
 
-export interface GetUserRequest {
-  id: number;
-}
-
-export interface GetUserResponse {
-  user?: User;
+export interface GetUserResponseData {
+  user?: UserData;
   success: boolean;
   message: string;
 }
 
-export interface CreateUserRequest {
+export interface CreateUserResponseData {
+  user?: UserData;
+  success: boolean;
+  message: string;
+}
+
+export interface UpdateUserResponseData {
+  user?: UserData;
+  success: boolean;
+  message: string;
+}
+
+export interface DeleteUserResponseData {
+  success: boolean;
+  message: string;
+}
+
+export interface CreateUserRequestData {
   name: string;
   email: string;
 }
 
-export interface CreateUserResponse {
-  user?: User;
-  success: boolean;
-  message: string;
-}
-
-export interface UpdateUserRequest {
+export interface UpdateUserRequestData {
   id: number;
   name: string;
   email: string;
 }
 
-export interface UpdateUserResponse {
-  user?: User;
-  success: boolean;
-  message: string;
-}
-
-export interface DeleteUserRequest {
+export interface DeleteUserRequestData {
   id: number;
 }
 
-export interface DeleteUserResponse {
-  success: boolean;
-  message: string;
+// Protocol BuffersとJavaScriptオブジェクト間の変換ヘルパー
+const convertUserFromPb = (user: User): UserData => ({
+  id: user.getId(),
+  name: user.getName(),
+  email: user.getEmail(),
+  createdAt: user.getCreatedAt(),
+  isActive: user.getIsActive()
+});
+
+const convertUserToPb = (userData: UserData): User => {
+  const user = new User();
+  user.setId(userData.id);
+  user.setName(userData.name);
+  user.setEmail(userData.email);
+  user.setCreatedAt(userData.createdAt);
+  user.setIsActive(userData.isActive);
+  return user;
+};
+
+// gRPCサービスクライアント
+export class GrpcUserService {
+  async getUsers(): Promise<GetUsersResponseData> {
+    return new Promise((resolve, reject) => {
+      const request = new GetUsersRequest();
+      
+      client.getUsers(request, {}, (err, response: GetUsersResponse) => {
+        if (err) {
+          console.error('gRPC Error:', err);
+          reject(new Error(`gRPC通信エラー: ${err.message}`));
+          return;
+        }
+
+        const users = response.getUsersList().map(convertUserFromPb);
+        
+        resolve({
+          users,
+          success: response.getSuccess(),
+          message: response.getMessage()
+        });
+      });
+    });
+  }
+
+  async getUser(id: number): Promise<GetUserResponseData> {
+    return new Promise((resolve, reject) => {
+      const request = new GetUserRequest();
+      request.setId(id);
+      
+      client.getUser(request, {}, (err, response: GetUserResponse) => {
+        if (err) {
+          console.error('gRPC Error:', err);
+          reject(new Error(`gRPC通信エラー: ${err.message}`));
+          return;
+        }
+
+        const user = response.getUser();
+        
+        resolve({
+          user: user ? convertUserFromPb(user) : undefined,
+          success: response.getSuccess(),
+          message: response.getMessage()
+        });
+      });
+    });
+  }
+
+  async createUser(userData: CreateUserRequestData): Promise<CreateUserResponseData> {
+    return new Promise((resolve, reject) => {
+      const request = new CreateUserRequest();
+      request.setName(userData.name);
+      request.setEmail(userData.email);
+      
+      client.createUser(request, {}, (err, response: CreateUserResponse) => {
+        if (err) {
+          console.error('gRPC Error:', err);
+          reject(new Error(`gRPC通信エラー: ${err.message}`));
+          return;
+        }
+
+        const user = response.getUser();
+        
+        resolve({
+          user: user ? convertUserFromPb(user) : undefined,
+          success: response.getSuccess(),
+          message: response.getMessage()
+        });
+      });
+    });
+  }
+
+  async updateUser(userData: UpdateUserRequestData): Promise<UpdateUserResponseData> {
+    return new Promise((resolve, reject) => {
+      const request = new UpdateUserRequest();
+      request.setId(userData.id);
+      request.setName(userData.name);
+      request.setEmail(userData.email);
+      
+      client.updateUser(request, {}, (err, response: UpdateUserResponse) => {
+        if (err) {
+          console.error('gRPC Error:', err);
+          reject(new Error(`gRPC通信エラー: ${err.message}`));
+          return;
+        }
+
+        const user = response.getUser();
+        
+        resolve({
+          user: user ? convertUserFromPb(user) : undefined,
+          success: response.getSuccess(),
+          message: response.getMessage()
+        });
+      });
+    });
+  }
+
+  async deleteUser(userData: DeleteUserRequestData): Promise<DeleteUserResponseData> {
+    return new Promise((resolve, reject) => {
+      const request = new DeleteUserRequest();
+      request.setId(userData.id);
+      
+      client.deleteUser(request, {}, (err, response: DeleteUserResponse) => {
+        if (err) {
+          console.error('gRPC Error:', err);
+          reject(new Error(`gRPC通信エラー: ${err.message}`));
+          return;
+        }
+        
+        resolve({
+          success: response.getSuccess(),
+          message: response.getMessage()
+        });
+      });
+    });
+  }
 }
 
-// 簡易gRPCクライアント（Fetch APIを使用）
-class UserServiceClient {
-  private baseUrl: string;
-
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
-  }
-
-  async getUsers(): Promise<GetUsersResponse> {
-    const response = await fetch(`${this.baseUrl}/UserService/GetUsers`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({})
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
-  async getUser(request: GetUserRequest): Promise<GetUserResponse> {
-    const response = await fetch(`${this.baseUrl}/UserService/GetUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(request)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
-  async createUser(request: CreateUserRequest): Promise<CreateUserResponse> {
-    const response = await fetch(`${this.baseUrl}/UserService/CreateUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(request)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
-  async updateUser(request: UpdateUserRequest): Promise<UpdateUserResponse> {
-    const response = await fetch(`${this.baseUrl}/UserService/UpdateUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(request)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
-  async deleteUser(request: DeleteUserRequest): Promise<DeleteUserResponse> {
-    const response = await fetch(`${this.baseUrl}/UserService/DeleteUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(request)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-}
-
-// クライアントインスタンスをエクスポート
-export const userServiceClient = new UserServiceClient(GRPC_SERVER_URL);
+// エクスポートするクライアントインスタンス
+export const grpcUserService = new GrpcUserService();

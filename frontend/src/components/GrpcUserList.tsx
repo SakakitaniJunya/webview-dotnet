@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  User, 
-  CreateUserRequest, 
-  userServiceClient 
+  UserData, 
+  CreateUserRequestData, 
+  grpcUserService 
 } from '../services/grpcClient';
 import './UserList.css';
 
 const GrpcUserList: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [newUser, setNewUser] = useState<CreateUserRequest>({ name: '', email: '' });
+  const [newUser, setNewUser] = useState<CreateUserRequestData>({ name: '', email: '' });
 
   useEffect(() => {
     loadUsers();
@@ -20,7 +20,7 @@ const GrpcUserList: React.FC = () => {
   const loadUsers = async () => {
     try {
       setLoading(true);
-      const response = await userServiceClient.getUsers();
+      const response = await grpcUserService.getUsers();
       
       if (response.success) {
         setUsers(response.users);
@@ -41,7 +41,7 @@ const GrpcUserList: React.FC = () => {
     if (!newUser.name || !newUser.email) return;
 
     try {
-      const response = await userServiceClient.createUser(newUser);
+      const response = await grpcUserService.createUser(newUser);
       
       if (response.success) {
         setNewUser({ name: '', email: '' });
@@ -60,7 +60,7 @@ const GrpcUserList: React.FC = () => {
     if (!window.confirm('このユーザーを削除しますか？')) return;
 
     try {
-      const response = await userServiceClient.deleteUser({ id });
+      const response = await grpcUserService.deleteUser({ id });
       
       if (response.success) {
         await loadUsers();

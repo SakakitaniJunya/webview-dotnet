@@ -2,9 +2,17 @@ using GrpcService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Kestrel設定でHTTP/1.1とHTTP/2両方をサポート
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5181, listenOptions =>
+    {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2;
+    });
+});
+
 // Add services to the container.
-builder.Services.AddGrpc().AddJsonTranscoding();
-builder.Services.AddGrpcWeb(o => o.GrpcWebEnabled = true);
+builder.Services.AddGrpc();
 
 // CORS設定を追加（gRPC-Web用）
 builder.Services.AddCors(options =>
