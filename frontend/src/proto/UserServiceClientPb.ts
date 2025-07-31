@@ -8,7 +8,7 @@
 // versions:
 // 	protoc-gen-grpc-web v1.5.0
 // 	protoc              v3.20.3
-// source: src/proto/user.proto
+// source: user.proto
 
 
 /* eslint-disable */
@@ -17,7 +17,7 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as src_proto_user_pb from '../../src/proto/user_pb'; // proto import: "src/proto/user.proto"
+import * as user_pb from './user_pb'; // proto import: "user.proto"
 
 
 export class UserServiceClient {
@@ -42,29 +42,29 @@ export class UserServiceClient {
   methodDescriptorGetUsers = new grpcWeb.MethodDescriptor(
     '/user.UserService/GetUsers',
     grpcWeb.MethodType.UNARY,
-    src_proto_user_pb.GetUsersRequest,
-    src_proto_user_pb.GetUsersResponse,
-    (request: src_proto_user_pb.GetUsersRequest) => {
+    user_pb.GetUsersRequest,
+    user_pb.GetUsersResponse,
+    (request: user_pb.GetUsersRequest) => {
       return request.serializeBinary();
     },
-    src_proto_user_pb.GetUsersResponse.deserializeBinary
+    user_pb.GetUsersResponse.deserializeBinary
   );
 
   getUsers(
-    request: src_proto_user_pb.GetUsersRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<src_proto_user_pb.GetUsersResponse>;
+    request: user_pb.GetUsersRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<user_pb.GetUsersResponse>;
 
   getUsers(
-    request: src_proto_user_pb.GetUsersRequest,
+    request: user_pb.GetUsersRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.GetUsersResponse) => void): grpcWeb.ClientReadableStream<src_proto_user_pb.GetUsersResponse>;
+               response: user_pb.GetUsersResponse) => void): grpcWeb.ClientReadableStream<user_pb.GetUsersResponse>;
 
   getUsers(
-    request: src_proto_user_pb.GetUsersRequest,
+    request: user_pb.GetUsersRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.GetUsersResponse) => void) {
+               response: user_pb.GetUsersResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -85,29 +85,29 @@ export class UserServiceClient {
   methodDescriptorGetUser = new grpcWeb.MethodDescriptor(
     '/user.UserService/GetUser',
     grpcWeb.MethodType.UNARY,
-    src_proto_user_pb.GetUserRequest,
-    src_proto_user_pb.GetUserResponse,
-    (request: src_proto_user_pb.GetUserRequest) => {
+    user_pb.GetUserRequest,
+    user_pb.GetUserResponse,
+    (request: user_pb.GetUserRequest) => {
       return request.serializeBinary();
     },
-    src_proto_user_pb.GetUserResponse.deserializeBinary
+    user_pb.GetUserResponse.deserializeBinary
   );
 
   getUser(
-    request: src_proto_user_pb.GetUserRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<src_proto_user_pb.GetUserResponse>;
+    request: user_pb.GetUserRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<user_pb.GetUserResponse>;
 
   getUser(
-    request: src_proto_user_pb.GetUserRequest,
+    request: user_pb.GetUserRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.GetUserResponse) => void): grpcWeb.ClientReadableStream<src_proto_user_pb.GetUserResponse>;
+               response: user_pb.GetUserResponse) => void): grpcWeb.ClientReadableStream<user_pb.GetUserResponse>;
 
   getUser(
-    request: src_proto_user_pb.GetUserRequest,
+    request: user_pb.GetUserRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.GetUserResponse) => void) {
+               response: user_pb.GetUserResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -128,29 +128,29 @@ export class UserServiceClient {
   methodDescriptorCreateUser = new grpcWeb.MethodDescriptor(
     '/user.UserService/CreateUser',
     grpcWeb.MethodType.UNARY,
-    src_proto_user_pb.CreateUserRequest,
-    src_proto_user_pb.CreateUserResponse,
-    (request: src_proto_user_pb.CreateUserRequest) => {
+    user_pb.CreateUserRequest,
+    user_pb.CreateUserResponse,
+    (request: user_pb.CreateUserRequest) => {
       return request.serializeBinary();
     },
-    src_proto_user_pb.CreateUserResponse.deserializeBinary
+    user_pb.CreateUserResponse.deserializeBinary
   );
 
   createUser(
-    request: src_proto_user_pb.CreateUserRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<src_proto_user_pb.CreateUserResponse>;
+    request: user_pb.CreateUserRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<user_pb.CreateUserResponse>;
 
   createUser(
-    request: src_proto_user_pb.CreateUserRequest,
+    request: user_pb.CreateUserRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.CreateUserResponse) => void): grpcWeb.ClientReadableStream<src_proto_user_pb.CreateUserResponse>;
+               response: user_pb.CreateUserResponse) => void): grpcWeb.ClientReadableStream<user_pb.CreateUserResponse>;
 
   createUser(
-    request: src_proto_user_pb.CreateUserRequest,
+    request: user_pb.CreateUserRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.CreateUserResponse) => void) {
+               response: user_pb.CreateUserResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -171,29 +171,29 @@ export class UserServiceClient {
   methodDescriptorUpdateUser = new grpcWeb.MethodDescriptor(
     '/user.UserService/UpdateUser',
     grpcWeb.MethodType.UNARY,
-    src_proto_user_pb.UpdateUserRequest,
-    src_proto_user_pb.UpdateUserResponse,
-    (request: src_proto_user_pb.UpdateUserRequest) => {
+    user_pb.UpdateUserRequest,
+    user_pb.UpdateUserResponse,
+    (request: user_pb.UpdateUserRequest) => {
       return request.serializeBinary();
     },
-    src_proto_user_pb.UpdateUserResponse.deserializeBinary
+    user_pb.UpdateUserResponse.deserializeBinary
   );
 
   updateUser(
-    request: src_proto_user_pb.UpdateUserRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<src_proto_user_pb.UpdateUserResponse>;
+    request: user_pb.UpdateUserRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<user_pb.UpdateUserResponse>;
 
   updateUser(
-    request: src_proto_user_pb.UpdateUserRequest,
+    request: user_pb.UpdateUserRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.UpdateUserResponse) => void): grpcWeb.ClientReadableStream<src_proto_user_pb.UpdateUserResponse>;
+               response: user_pb.UpdateUserResponse) => void): grpcWeb.ClientReadableStream<user_pb.UpdateUserResponse>;
 
   updateUser(
-    request: src_proto_user_pb.UpdateUserRequest,
+    request: user_pb.UpdateUserRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.UpdateUserResponse) => void) {
+               response: user_pb.UpdateUserResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -214,29 +214,29 @@ export class UserServiceClient {
   methodDescriptorDeleteUser = new grpcWeb.MethodDescriptor(
     '/user.UserService/DeleteUser',
     grpcWeb.MethodType.UNARY,
-    src_proto_user_pb.DeleteUserRequest,
-    src_proto_user_pb.DeleteUserResponse,
-    (request: src_proto_user_pb.DeleteUserRequest) => {
+    user_pb.DeleteUserRequest,
+    user_pb.DeleteUserResponse,
+    (request: user_pb.DeleteUserRequest) => {
       return request.serializeBinary();
     },
-    src_proto_user_pb.DeleteUserResponse.deserializeBinary
+    user_pb.DeleteUserResponse.deserializeBinary
   );
 
   deleteUser(
-    request: src_proto_user_pb.DeleteUserRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<src_proto_user_pb.DeleteUserResponse>;
+    request: user_pb.DeleteUserRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<user_pb.DeleteUserResponse>;
 
   deleteUser(
-    request: src_proto_user_pb.DeleteUserRequest,
+    request: user_pb.DeleteUserRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.DeleteUserResponse) => void): grpcWeb.ClientReadableStream<src_proto_user_pb.DeleteUserResponse>;
+               response: user_pb.DeleteUserResponse) => void): grpcWeb.ClientReadableStream<user_pb.DeleteUserResponse>;
 
   deleteUser(
-    request: src_proto_user_pb.DeleteUserRequest,
+    request: user_pb.DeleteUserRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: src_proto_user_pb.DeleteUserResponse) => void) {
+               response: user_pb.DeleteUserResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
