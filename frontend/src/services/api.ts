@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { User, CreateUserRequest, UpdateUserRequest } from '../types/User';
 
-const API_BASE_URL = 'https://localhost:7098/api';
+const API_BASE_URL = 'http://localhost:5262/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
